@@ -35,17 +35,21 @@ CFLAGS+=-I../../lib/CMSIS/CM3/DeviceSupport/ST/STM32F10x/
 #======================================================================#
 #setup system clock
 SRC=./system_stm32f10x.c
+
 #StdPeriph
 SRC+=$(ST_LIB)/src/misc.c \
 	$(ST_LIB)/src/stm32f10x_rcc.c \
 	$(ST_LIB)/src/stm32f10x_gpio.c \
 	$(ST_LIB)/src/stm32f10x_usart.c \
+	$(ST_LIB)/src/stm32f10x_tim.c \
 
 
 #Major programs
 SRC+=./main.c \
 	./usart.c \
-	./string.c
+	./string.c 
+
+SRC+=time.c	
 
 #======================================================================#
 #STM32 startup file
@@ -74,12 +78,12 @@ clean:
 	rm -rf $(EXECUTABLE)
 	rm -rf $(BIN_IMAGE)
 #Make flash
-flash:
+flash: $(BIN_IMAGE)
 	st-flash write $(BIN_IMAGE) 0x8000000
 openocd:
 	openocd -f "../../commom/openocd.cfg"
 gdb:
-	arm-none-eabi-gdb -x ../commom/gdb_init.gdb
+	arm-none-eabi-gdb  ./gdb_init.gdb
 gdbtui:
 	arm-none-eabi-gdb -tui -x ../commom/gdb_init.gdb
 #======================================================================

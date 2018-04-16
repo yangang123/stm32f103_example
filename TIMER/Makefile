@@ -44,7 +44,9 @@ SRC+=$(ST_LIB)/src/misc.c \
 #Major programs
 SRC+=./main.c \
 	./stm32f10x_it.c \
-	./led.c
+	./led.c 
+
+#SRC+=./time.c
 
 #======================================================================#
 #STM32 startup file

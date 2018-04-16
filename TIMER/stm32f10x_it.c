@@ -37,8 +37,14 @@
 void TIM2_IRQHandler()
 {
         if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET){
-                gpio_toggle(GPIOA, GPIO_Pin_0);
-                gpio_toggle(GPIOA, GPIO_Pin_1);
+            static uint16_t time = 0;
+
+               //if (++time > 1000) {
+                  time = 0;
+                    gpio_toggle(GPIOB, GPIO_Pin_14);
+                  gpio_toggle(GPIOB, GPIO_Pin_15);
+               //} 
+              
                 TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
         }
 }
